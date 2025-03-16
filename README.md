@@ -34,7 +34,36 @@ curl -k -u admin:{{mypassword}} https://localhost:9200 :
 ![image](https://github.com/user-attachments/assets/3b982ed7-5189-4117-bd03-865929ed15ac)
 ![image](https://github.com/user-attachments/assets/dccc0adb-027b-4be4-bf35-35a37d3d98e9)
 
+***Creating an index***
+First, let’s create a new index within our newly created OpenSearch cluster. We’ll call the new index “movie_ratings” and we’ll also define the index mapping to include fields like “title” for the movie title, “genre” for the movie genre, and “rating” for the movie’s rating. Our index will contain two shards and one replica.
 
-
+This can be done using the following OpenSearch API request:
+https://localhost:9200/movie_ratings
+'''json
+curl --location --request PUT 'https://localhost:9200/movie_ratings' \
+--header 'Authorization: Basic YWRtaW46R0hBSUxFTkVtYXJrMTE5OTQqKg==' \
+--header 'Content-Type: application/json' \
+--data '{
+  "settings": {
+    "number_of_shards": 2,
+    "number_of_replicas": 1
+  },
+  "mappings": {
+    "properties": {
+      "title": {
+        "type": "text"
+      },
+      "genre": {
+        "type": "text"
+      },
+      "rating": {
+        "type": "float"
+      }
+    }
+  }
+}'
+'''
+=> result:
+![image](https://github.com/user-attachments/assets/d009803c-94a1-4c00-9fba-886978e56811)
 
 
