@@ -39,7 +39,7 @@ First, let’s create a new index within our newly created OpenSearch cluster. W
 
 This can be done using the following OpenSearch API request:
 https://localhost:9200/movie_ratings
-'''json
+```json
 curl --location --request PUT 'https://localhost:9200/movie_ratings' \
 --header 'Authorization: Basic YWRtaW46R0hBSUxFTkVtYXJrMTE5OTQqKg==' \
 --header 'Content-Type: application/json' \
@@ -62,7 +62,7 @@ curl --location --request PUT 'https://localhost:9200/movie_ratings' \
     }
   }
 }'
-'''
+```
 => result:
 ![image](https://github.com/user-attachments/assets/d009803c-94a1-4c00-9fba-886978e56811)
 
