@@ -162,9 +162,7 @@ The dataset to be ingested is from a CSV file that contains the records of about
 
 ![image-23-1536x1255](https://github.com/user-attachments/assets/09b1a917-a795-4990-8ac2-94e92c46b1c8)
 The file is a typical CSV file where the first row is a header that contains six fields: Name, Developer, Producer, Genre, Operating System, and Date Released.
-![image-34-1536x799](https://github.com/user-attachments/assets/88e0dcd1-ba5c-4876-8715-2848c81e9ff0)
-
-or dowload the zip which contains csv from this curl :
+ dowload the zip which contains csv from this curl :
 curl -L -o C:/Workspace/projects/opensearch/computer-games-dataset.zip  https://www.kaggle.com/api/v1/datasets/download/iamsouravbanerjee/computer-games-dataset
 ![image](https://github.com/user-attachments/assets/ec82a521-c4fc-4a17-b244-301652a14283)
 
