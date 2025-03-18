@@ -186,7 +186,195 @@ first install the request module :
 
 python publish_json_to_opensearch.py  to run the script
 
+Running either script adds the data from the file into our OpenSearch cluster in a new index called games_index which was specified in the script.
 the script is executed successfully:
 ![image](https://github.com/user-attachments/assets/5be56b14-1769-4b53-97b7-b3971aa16a5d)
 
+Using the request from earlier to list our indices, we can see the newly created index in the OpenSearch cluster. The docs.count column indicates that the new index has a total of 1095 documents within it, ready to be searched.
+=>
+![image](https://github.com/user-attachments/assets/961e9ace-80d7-494a-97dd-824ff084b861)
+
+***Searching the Index***
+OpenSearch offers a flexible search language known as the query domain-specific language (DSL), which allows us to effectively search through our data using a JSON interface. This makes it ideal for querying data via the OpenSearch API.
+
+With query DSL, you need to specify a query in the query parameter of the search. One of the simplest searches in OpenSearch uses the match_all query, which matches all documents in an index. This is useful for listing all the documents contained in our index. Let’s give that a try.
+```json
+curl --location --request GET 'https://localhost:9200/movie_ratings/_search' \
+--header 'Authorization: Basic YWRtaW46R0hBSUxFTkVtYXJrMTE5OTQqKg==' \
+--header 'Content-Type: application/json' \
+--data '{
+  "query": {
+    "match_all": {}
+  }
+}'
+```
+![image](https://github.com/user-attachments/assets/89443b67-e998-4adc-bb94-2aa0673f0b8c)
+
+=> response :
+```json
+{
+    "took": 7,
+    "timed_out": false,
+    "_shards": {
+        "total": 2,
+        "successful": 2,
+        "skipped": 0,
+        "failed": 0
+    },
+    "hits": {
+        "total": {
+            "value": 3,
+            "relation": "eq"
+        },
+        "max_score": 1.0,
+        "hits": [
+            {
+                "_index": "movie_ratings",
+                "_id": "1",
+                "_score": 1.0,
+                "_source": {
+                    "title": "Inception",
+                    "genre": "Action",
+                    "rating": 8.8
+                }
+            },
+            {
+                "_index": "movie_ratings",
+                "_id": "PaOgqZUBTet7jWEcp6W_",
+                "_score": 1.0,
+                "_source": {
+                    "title": "Pulp Fiction",
+                    "genre": "Crime",
+                    "rating": 8.9
+                }
+            },
+            {
+                "_index": "movie_ratings",
+                "_id": "NaOHqZUBTet7jWEcj6V8",
+                "_score": 1.0,
+                "_source": {
+                    "title": "The Shawshank Redemption",
+                    "genre": "Drama",
+                    "rating": 9.3
+                }
+            }
+        ]
+    }
+}
+```
+
+=> we see all data of the index.
+
+The response returned lists of all the documents found in our index. In addition to details that we created like title, genre, and rating, each document entry also includes additional attributes such as the index name (_index) and a unique document ID (_id) which is specific to that document.
+
+To perform an actual search of the index, we can use the same search request from earlier, only this time, we modify the request’s body slightly to indicate what we’re looking for, like this:
+
+now let s work with the other index games_index
+![image](https://github.com/user-attachments/assets/0c7515ca-b00a-4148-9f66-f41ee2b46333)
+
+In the example above, we searched for the term “rock”, which resulted in a list of matching documents referred to as “hits.” These hits represent documents within the index that contain the search term within any field. For example, the first hit has the word rock in the Name field, while the second hit has the word rock in the Producer and Developer fields.
+```json
+{
+    "took": 23,
+    "timed_out": false,
+    "_shards": {
+        "total": 1,
+        "successful": 1,
+        "skipped": 0,
+        "failed": 0
+    },
+    "hits": {
+        "total": {
+            "value": 5,
+            "relation": "eq"
+        },
+        "max_score": 5.9073567,
+        "hits": [
+            {
+                "_index": "games_index",
+                "_id": "h6PBqZUBTet7jWEcgqdK",
+                "_score": 5.9073567,
+                "_source": {
+                    "Name": "Lego Rock Raiders",
+                    "Developer": "Data Design Interactive",
+                    "Producer": "Lego Media",
+                    "Genre": "Real-time strategy, action",
+                    "Operating System": "Microsoft Windows",
+                    "Date Released": "November 15, 1999"
+                }
+            },
+            {
+                "_index": "games_index",
+                "_id": "4aPBqZUBTet7jWEcJqUp",
+                "_score": 5.7722692,
+                "_source": {
+                    "Name": "Banished",
+                    "Developer": "Shining Rock Software",
+                    "Producer": "Shining Rock Software",
+                    "Genre": "City building, strategy",
+                    "Operating System": "Microsoft Windows",
+                    "Date Released": "February 18, 2014"
+                }
+            },
+            {
+                "_index": "games_index",
+                "_id": "T6PBqZUBTet7jWEcq6iR",
+                "_score": 5.223794,
+                "_source": {
+                    "Name": "Rock 'n' Roll Adventures",
+                    "Developer": "Data Design Interactive",
+                    "Producer": "Data Design Interactive",
+                    "Genre": "Platform",
+                    "Operating System": "Microsoft Windows",
+                    "Date Released": "September 17, 2007"
+                }
+            },
+            {
+                "_index": "games_index",
+                "_id": "KqPBqZUBTet7jWEcbadb",
+                "_score": 4.2420635,
+                "_source": {
+                    "Name": "Guitar Hero III: Legends of Rock",
+                    "Developer": "Neversoft",
+                    "Producer": "Aspyr Media",
+                    "Genre": "Music, Rhythm",
+                    "Operating System": "Microsoft Windows, Mac OS X",
+                    "Date Released": "November 13, 2007"
+                }
+            },
+            {
+                "_index": "games_index",
+                "_id": "XqPBqZUBTet7jWEcQKa3",
+                "_score": 2.9998503,
+                "_source": {
+                    "Name": "Counter-Strike: Condition Zero",
+                    "Developer": "Valve, Gearbox Software, Ritual Entertainment, Turtle Rock Studios",
+                    "Producer": "Valve",
+                    "Genre": "First-person shooter",
+                    "Operating System": "Microsoft Windows, Linux, macOS",
+                    "Date Released": "March 23, 2004"
+                }
+            }
+        ]
+    }
+}
+```
+But what if we want to do a more specific search, such as limiting the hits to only the “Name” field? We can achieve that by modifying the search request to specify the fields we want to restrict the search to. Here’s an example of how that would look:
+![image](https://github.com/user-attachments/assets/d859635c-c47d-421b-a083-e2b68ff3e603)
+The modified request now only returns hits that contain the word rock within the “Name” field. Hits containing the term “rock” in fields other than the “Name” field are excluded from the results.
+
+Had our goal been to search within the “Producer” field, then our request would have looked like this instead:
+![image](https://github.com/user-attachments/assets/daebebfe-e880-490a-aa09-9a145e99d7b8)
+
+It is also possible to use the bool query within the request body to restrict our search to multiple fields within the same search. This is super useful for making very specific searches. For example, if we want to find RPG games that can be played on macOS from our index, we could make a request like this to restrict our search to only documents that match both criteria.
+![image](https://github.com/user-attachments/assets/99c203d0-d40a-4be1-b963-d0a21bdfaaa1)
+
+Querying data is a significant part of OpenSearch, making it a very broad topic that, unfortunately, is beyond the scope of this guide. If you’re interested in learning more about how to effectively query data using the OpenSearch API, I highly recommend referring to the OpenSearch documentation on the topic: https://opensearch.org/docs/2.7/query-dsl/
+
+***Delete an index***
+
+Removing an index is quite straightforward. We simply initiate a DELETE request to the specific endpoint corresponding to the index we wish to delete.
+![image](https://github.com/user-attachments/assets/15755035-b7cc-4313-a17a-77271d7c41d5)
+
+The response confirms that the delete operation was successful.
 
