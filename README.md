@@ -166,6 +166,12 @@ The file is a typical CSV file where the first row is a header that contains six
 curl -L -o C:/Workspace/projects/opensearch/computer-games-dataset.zip  https://www.kaggle.com/api/v1/datasets/download/iamsouravbanerjee/computer-games-dataset
 ![image](https://github.com/user-attachments/assets/ec82a521-c4fc-4a17-b244-301652a14283)
 
+Before we can use this data in OpenSearch, we first need to convert the CSV data to JSON format. There are various ways to do that, but for the purpose of this guide, we’ll be using a free online conversion tool which can be found at the link below:
+https://www.convertcsv.com/csv-to-json.htm
+![image](https://github.com/user-attachments/assets/941e4efd-06cc-412c-b11e-acec13e79509)
+
+After converting the data from the CSV file into JSON format, we can proceed to index it into our OpenSearch cluster. Thanks to the open-source nature of OpenSearch, clients are available for a wide range of platforms and programming languages. You can find these clients at the following link: https://opensearch.org/docs/2.7/clients/index/
+
 
 
 
