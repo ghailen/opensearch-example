@@ -66,4 +66,27 @@ curl --location --request PUT 'https://localhost:9200/movie_ratings' \
 => result:
 ![image](https://github.com/user-attachments/assets/d009803c-94a1-4c00-9fba-886978e56811)
 
+“acknowledged” in the response indicates that the index was successfully created.
+***Listing all Indices***
+
+curl --location 'https://localhost:9200/_cat/indices?v=null' \
+--header 'Authorization: Basic YWRtaW46R0hBSUxFTkVtYXJrMTE5OTQqKg==' \
+--header 'Content-Type: application/json'
+
+![image](https://github.com/user-attachments/assets/eb6d077a-58bf-4150-8251-9b4390db1e3d)
+
+The command’s response presents a table displaying the indices within our cluster – including the new movie_rating index we just created. Below is a brief description of what each column in the table means.
+
+    health: Represents the health status of the index, where “green” indicates that all primary and replica shards are active and assigned, “yellow” indicates that all primary shards are active and assigned but not all replica shards are active, and “red” indicates that some or all primary shards are not active.
+    status: Indicates whether the index is open or closed. An open can be read from and written to, while an index that is closed cannot be accessed.
+    index: The name of the index.
+    uuid: The unique identifier for the index.
+    pri: The number of primary shards for the index.
+    rep: The number of replica shards for the index.
+    docs.count: The number of documents in the index.
+    docs.deleted: The number of deleted documents in the index.
+    store.size: The size of the index on disk, including both primary and replica shards.
+    pri.store.size: The size of the primary shards on the disk.
+
+
 
