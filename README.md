@@ -114,3 +114,26 @@ _index: the name of the index where the document was indexed.
 _id: the unique identifier for the document that we just indexed. OpenSearch automatically assigns a unique ID to each document if you don’t provide one.
 _version: the version of the document. It’s useful for concurrency control. In this case, it’s 1, indicating that this is the first version of the document.
 result: the outcome of the operation.
+
+***Adding data in bulk***
+a random example for test:
+
+curl --location 'https://localhost:9200/_bulk' \
+--header 'Authorization: Basic YWRtaW46R0hBSUxFTkVtYXJrMTE5OTQqKg==' \
+--header 'Content-Type: application/json' \
+--data '
+{ "index": { "_index": "test_index", "_id": "1" } }
+{ "name": "Alice", "age": 25, "city": "Paris" }
+{ "index": { "_index": "test_index", "_id": "2" } }
+{ "name": "Bob", "age": 30, "city": "Lyon" }
+{ "update": { "_index": "test_index", "_id": "1" } }
+{ "doc": { "age": 26 } }
+{ "delete": { "_index": "test_index", "_id": "2" } }
+'
+![image](https://github.com/user-attachments/assets/df02b6b1-7fbc-46a0-84b4-b7c5ff479886)
+![image](https://github.com/user-attachments/assets/fbb64a27-0f2a-4a9b-844f-0347d8dab6a7)
+![image](https://github.com/user-attachments/assets/09e8b337-81ef-43a8-9744-f68bd0af33d2)
+
+
+let’s now add a couple more documents to our collection of movies. However, this time we’ll use the _bulk API endpoint to add them simultaneously.
+
