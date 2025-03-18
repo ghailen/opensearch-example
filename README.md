@@ -89,4 +89,26 @@ The command’s response presents a table displaying the indices within our clus
     pri.store.size: The size of the primary shards on the disk.
 
 
+Whenever you list the indices in a cluster, chances are you’ll see indices that you did not create. These special indices are created automatically and usually begin with a dot, like .kibana_1, in the screenshot above. This particular index (.kibana_1) is used by Kibana, an open-source data visualisation tool commonly used with OpenSearch. Kibana stores its configuration in this index, so unless you have a specific need or understanding of its impact, you should not modify this or any other special index that was created automatically.
 
+***Adding data to our index***
+You should now have a newly created empty index called movie_ratings. However, before you can search it for data, you must first add data to it. This data is known as documents, and the process of adding documents to an index so that it is searchable is known as indexing.
+
+To index a single document, use the request below:
+
+The body of the request contains the document data itself. In the example below, the document consists of a single record that includes the movie title, its genre, and its respective IMDb rating. It would appear as follows:
+curl --location 'https://localhost:9200/movie_ratings/_doc' \
+--header 'Authorization: Basic YWRtaW46R0hBSUxFTkVtYXJrMTE5OTQqKg==' \
+--header 'Content-Type: application/json' \
+--data '{
+  "title": "The Shawshank Redemption",
+  "genre": "Drama",
+  "rating": 9.3
+}'
+![image](https://github.com/user-attachments/assets/dbf93c9c-edb5-4dda-8f18-7663be44da1e)
+
+The response returned by OpenSearch confirms that the document was successfully indexed. Below is an explanation of what some of the attributes in the response mean.
+_index: the name of the index where the document was indexed.
+_id: the unique identifier for the document that we just indexed. OpenSearch automatically assigns a unique ID to each document if you don’t provide one.
+_version: the version of the document. It’s useful for concurrency control. In this case, it’s 1, indicating that this is the first version of the document.
+result: the outcome of the operation.
