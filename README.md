@@ -172,6 +172,10 @@ https://www.convertcsv.com/csv-to-json.htm
 
 After converting the data from the CSV file into JSON format, we can proceed to index it into our OpenSearch cluster. Thanks to the open-source nature of OpenSearch, clients are available for a wide range of platforms and programming languages. You can find these clients at the following link: https://opensearch.org/docs/2.7/clients/index/
 
-
+For simplicity, we’ll use a basic Python script that reads the data directly from our saved JSON file. A copy of the script can be found below:
+The Python script above reads JSON data directly from the file which we converted from a CSV file earlier. However, there is no reason why the same Python script can’t be modified to include a function to do the CSV to JSON conversion. Below is a modified version which does just that.
+![image](https://github.com/user-attachments/assets/4438a45b-7adf-450d-9b58-6c5d13a4d833)
+=>
+![image](https://github.com/user-attachments/assets/db6fdeac-bb81-48f6-b99d-bfb59a84343d)
 
 
