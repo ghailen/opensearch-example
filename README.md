@@ -176,6 +176,17 @@ For simplicity, we’ll use a basic Python script that reads the data directly f
 The Python script above reads JSON data directly from the file which we converted from a CSV file earlier. However, there is no reason why the same Python script can’t be modified to include a function to do the CSV to JSON conversion. Below is a modified version which does just that.
 ![image](https://github.com/user-attachments/assets/4438a45b-7adf-450d-9b58-6c5d13a4d833)
 =>
-![image](https://github.com/user-attachments/assets/db6fdeac-bb81-48f6-b99d-bfb59a84343d)
+dont forget to add verify=false , to ignore ssl verification in dev/test environement, in the production environment it is better to add ssl certifacte.
+![image](https://github.com/user-attachments/assets/611c9a74-9466-4ffd-b2b2-e32add7fb5db)
+
+
+let's run the script:
+first install the request module :
+![image](https://github.com/user-attachments/assets/3c6165f0-ddb4-49da-9391-91f231e28395)
+
+python publish_json_to_opensearch.py  to run the script
+
+the script is executed successfully:
+![image](https://github.com/user-attachments/assets/5be56b14-1769-4b53-97b7-b3971aa16a5d)
 
 
