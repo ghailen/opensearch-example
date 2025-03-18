@@ -117,7 +117,7 @@ result: the outcome of the operation.
 
 ***Adding data in bulk***
 a random example for test:
-
+```json
 curl --location 'https://localhost:9200/_bulk' \
 --header 'Authorization: Basic YWRtaW46R0hBSUxFTkVtYXJrMTE5OTQqKg==' \
 --header 'Content-Type: application/json' \
@@ -130,10 +130,44 @@ curl --location 'https://localhost:9200/_bulk' \
 { "doc": { "age": 26 } }
 { "delete": { "_index": "test_index", "_id": "2" } }
 '
+```
 ![image](https://github.com/user-attachments/assets/df02b6b1-7fbc-46a0-84b4-b7c5ff479886)
 ![image](https://github.com/user-attachments/assets/fbb64a27-0f2a-4a9b-844f-0347d8dab6a7)
 ![image](https://github.com/user-attachments/assets/09e8b337-81ef-43a8-9744-f68bd0af33d2)
 
 
 let’s now add a couple more documents to our collection of movies. However, this time we’ll use the _bulk API endpoint to add them simultaneously.
+```json
+curl --location 'https://localhost:9200/_bulk' \
+--header 'Authorization: Basic YWRtaW46R0hBSUxFTkVtYXJrMTE5OTQqKg==' \
+--header 'Content-Type: application/json' \
+--data '
+{ "index": { "_index": "movie_ratings", "_id": "1" } }
+{ "title" : "Inception", "genre" : "Action", "rating" : 8.8 }
+{ "index" : { "_index" : "movie_ratings" } }
+{ "title" : "Pulp Fiction", "genre" : "Crime", "rating" : 8.9 }
+'
+```
+![image](https://github.com/user-attachments/assets/cf29fe3b-c4ba-4c8d-affc-880357c4429b)
+
+The two new documents mean our index now has three documents in total. While an index with a mere three documents is manageable, OpenSearch is designed to handle much larger indices – with hundreds of thousands of documents.
+
+Using the methods from earlier to index such large datasets is time-consuming and inefficient. So, another approach is needed here; Ingestion.
+
+Ingestion refers to the process of gathering and indexing data from various sources, such as log files, databases, etc, into OpenSearch. However, the data in these files are usually in a format that cannot be used directly by OpenSearch through an API client, as demonstrated in the previous example. The data often needs to be parsed and formatted correctly so that it can be properly indexed. This may involve extracting fields from log messages, converting timestamps to a standard format, or other data transformation tasks. Once the data is properly formatted, it can then be indexed, which involves adding it to the OpenSearch database in a way that allows it to be searched. In some cases, additional data can be added during the ingestion process to provide more context or to make the data more useful. For example, if you’re indexing web server logs, you might add geographic information based on the IP addresses in the logs.
+
+To see this in action, we will ingest a list of computer games into our OpenSearch cluster.
+
+The dataset to be ingested is from a CSV file that contains the records of about a thousand computer games. You can find and download the same dataset from Kaggle – https://www.kaggle.com/datasets/iamsouravbanerjee/computer-games-dataset
+
+![image-23-1536x1255](https://github.com/user-attachments/assets/09b1a917-a795-4990-8ac2-94e92c46b1c8)
+The file is a typical CSV file where the first row is a header that contains six fields: Name, Developer, Producer, Genre, Operating System, and Date Released.
+![image-34-1536x799](https://github.com/user-attachments/assets/88e0dcd1-ba5c-4876-8715-2848c81e9ff0)
+
+or dowload the zip which contains csv from this curl :
+curl -L -o C:/Workspace/projects/opensearch/computer-games-dataset.zip  https://www.kaggle.com/api/v1/datasets/download/iamsouravbanerjee/computer-games-dataset
+![image](https://github.com/user-attachments/assets/ec82a521-c4fc-4a17-b244-301652a14283)
+
+
+
 
