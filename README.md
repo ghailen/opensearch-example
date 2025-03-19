@@ -459,6 +459,7 @@ First of all we need to search for the compatible version of filebeat with opens
 we need a oss version to be compatible so we need to follow this doc:
 https://opensearch.org/docs/latest/tools/#agents-and-ingestion-tools
 run this api:
+```json
 curl --location --request PUT 'https://localhost:9200/_cluster/settings' \
 --header 'Authorization: Basic YWRtaW46R0hBSUxFTkVtYXJrMTE5OTQqKg==' \
 --header 'Content-Type: application/json' \
@@ -469,7 +470,7 @@ curl --location --request PUT 'https://localhost:9200/_cluster/settings' \
     }
   }
 }'
-
+```
 the version of opensearch here is :
 ![image](https://github.com/user-attachments/assets/a80b408d-721b-4ce9-a863-7bce8dcf6fa5)
 
@@ -483,7 +484,7 @@ filebeat.exe -e -c C:\Workspace\projects\opensearch\filebeat.yml
 
 this is the filebeat yml file conf: 
 
-  <sup> 
+ ```json 
       filebeat.inputs:
   - type: log
     enabled: true
@@ -510,10 +511,42 @@ logging.files:
   path: /var/log/filebeat
   name: filebeat.log
   keepfiles: 7
-  </sup>
+```
   
 ![image](https://github.com/user-attachments/assets/68e18782-0c47-4547-9359-7e47e77a56cd)
 
-![image](https://github.com/user-attachments/assets/5dd09e19-09fe-447e-9502-10fe6f8076f8)
+the index weblogic-log will create automatically by filebeat:
+example of some log of filebeat:
+```json 
+2025-03-19T16:16:57.474+0100    INFO    template/load.go:109    template with name 'weblogic-logs' loaded.
+2025-03-19T16:16:57.474+0100    INFO    [index-management]      idxmgmt/std.go:298      Loaded index template.
+2025-03-19T16:16:57.474+0100    DEBUG   [esclientleg]   eslegclient/connection.go:364   GET https://localhost:9200/  <nil>
+2025-03-19T16:16:57.477+0100    INFO    [publisher_pipeline_output]     pipeline/output.go:151  Connection to backoff(elasticsearch(https://localhost:9200)) established
+2025-03-19T16:16:57.923+0100    DEBUG   [elasticsearch] elasticsearch/client.go:230     PublishEvents: 9 events have been published to elasticsearch in 445.2693ms.
+2025-03-19T16:16:57.923+0100    DEBUG   [publisher]     memqueue/ackloop.go:160 ackloop: receive ack [0: 0, 9]
+2025-03-19T16:16:57.923+0100    DEBUG   [publisher]     memqueue/eventloop.go:535       broker ACK events: count=9, start-seq=1, end-seq=9
+
+2025-03-19T16:16:57.924+0100    DEBUG   [acker] beater/acker.go:59      stateful ack    {"count": 9}
+2025-03-19T16:16:57.924+0100    DEBUG   [publisher]     memqueue/ackloop.go:128 ackloop: return ack to broker loop:9
+2025-03-19T16:16:57.924+0100    DEBUG   [registrar]     registrar/registrar.go:264      Processing 9 events
+2025-03-19T16:16:57.924+0100    DEBUG   [registrar]     registrar/registrar.go:231      Registrar state updates processed. Count: 9
+2025-03-19T16:16:57.924+0100    DEBUG   [publisher]     memqueue/ackloop.go:131 ackloop:  done send ack
+2025-03-19T16:16:57.924+0100    DEBUG   [registrar]     registrar/registrar.go:201      Registry file updated. 1 active states.
+2025-03-19T16:16:59.022+0100    DEBUG   [harvester]     log/log.go:107  End of file reached: C:\Workspace\projects\opensearch\weblogic-logs.log; Backoff now.
+2025-03-19T16:17:03.029+0100    DEBUG   [harvester]     log/log.go:107  End of file reached: C:\Workspace\projects\opensearch\weblogic-logs.log; Backoff now.
+```
+
+herre we can see that a new index is created :
+![image](https://github.com/user-attachments/assets/384cb3d2-6966-43a9-9b29-66da76a71867)
+
+lets create a new index to see the log in the dashboard:
+![image](https://github.com/user-attachments/assets/d5785acf-0c55-4e9d-a30c-97cbcb387596)
+
+![image](https://github.com/user-attachments/assets/24776c48-df43-4a6b-aa31-61309681d1fe)
+
+let s check the log in the opensearch dabshboard index pattern:
+![image](https://github.com/user-attachments/assets/dcbf36a5-c49c-4201-bf39-9cd4794db3d9)
+we can add filter message , to filter by messages:
+![image](https://github.com/user-attachments/assets/6fc6614c-c23e-47d2-8605-1b758936e625)
 
 
