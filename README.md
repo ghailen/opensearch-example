@@ -547,6 +547,6 @@ lets create a new index to see the log in the dashboard:
 let s check the log in the opensearch dabshboard index pattern:
 ![image](https://github.com/user-attachments/assets/dcbf36a5-c49c-4201-bf39-9cd4794db3d9)
 we can add filter message , to filter by messages:
-![image](https://github.com/user-attachments/assets/6fc6614c-c23e-47d2-8605-1b758936e625)
+
 
 
