@@ -378,3 +378,74 @@ Removing an index is quite straightforward. We simply initiate a DELETE request 
 
 The response confirms that the delete operation was successful.
 
+***The OpenSearch Dashboard***
+Earlier in this guide, we discussed the steps involved in creating an OpenSearch index and the process of ingesting data into it. We also provided a brief overview of querying this data using the OpenSearch API.
+
+But you may be asking yourself: How useful is all this data in our OpenSearch cluster if it can only be accessed through an API, with results given back in JSON format?
+
+This is where OpenSearch Dashboards come in.
+
+OpenSearch Dashboards is a powerful tool that complements the OpenSearch API by providing a user-friendly interface for visualising and analysing the data stored in an OpenSearch cluster.
+
+***Index patterns***
+
+An index pattern is a way to designate the indices we want OpenSearch Dashboards to examine when running a search or query. This simplifies our work because instead of specifying the exact index or list of indices each time we want to explore data or create a visualisation, we can just specify the index pattern.
+
+To create an index pattern, open the left-side navigation pane, and click “Stack Management”, followed by “Index patterns”. Then click the “Create index pattern” button.
+
+http://localhost:5601/app/management/opensearch-dashboards/indexPatterns
+![image](https://github.com/user-attachments/assets/0f0fb465-5984-4e9d-a9a8-2e053c4211c8)
+
+The next step involves establishing a pattern that allows us to specify the indices we wish to include in our index pattern. One option is to use an asterisk (*) as a wildcard character, enabling us to select all available indices. However, in our case, we only want to select a single index. So, we simply enter the complete name of the index and then click “next” to finalise the creation of the index pattern.
+
+![image](https://github.com/user-attachments/assets/d5db4587-c208-43f8-b61d-e09109369429)
+![image](https://github.com/user-attachments/assets/d57c4351-f421-4a6e-a50f-68b31d0a189e)
+
+
+![image](https://github.com/user-attachments/assets/f3f9d637-bf2a-4389-bee5-626ca3680c93)
+
+The last page on the creation screen lists all the fields within the newly created index pattern. You’ll notice some entries ending in .keyword. This is the result of the default dynamic mapping settings in OpenSearch. For text fields, this generally means that two versions of the field are created within our index pattern:
+
+<fieldname>: This is the analysed version of the field. It’s broken down into individual terms (which are roughly equivalent to words), and each of these terms can be searched independently. This is useful for full text search.
+
+<fieldname>.keyword: This is the not-analysed version of the field. It is a single term exactly as it was provided, useful for sorting, aggregations, and exact value searches. It also allows for efficient “term” queries, which match the exact value of the field.
+
+Let’s say we have a field named “colour” with the value “Dark Blue”. In the analysed “colour” field, this would be broken down into two terms, “Dark” and “Blue”. If you searched for just “Blue”, this document would be a match. However, in the <fieldname>.keyword field, the value is a single term, “Dark Blue”. If you searched for just “Blue” in this field, it wouldn’t be a match.
+
+This strategy of using <fieldname> and <fieldname>.keyword allows us to perform both full-text searches and exact value operations on the same textual data.
+
+***Interacting with the data***
+With the index pattern created, we can now interact with our data in the cluster. To do this, head back to the OpenSearch Dashboards home page and click “Visualize and analyze”. Then click “Discover”.
+
+The Discover page on OpenSearch Dashboards provides a UI to explore and interact with the data stored in your OpenSearch cluster. It offers a search and visualisation interface where you can execute queries and view the results in real-time. Give it a try by entering a search term in the search box!
+
+![image](https://github.com/user-attachments/assets/c5b50b78-c01b-4e97-b232-d115da5d0017)
+
+In OpenSearch Dashboards, you can perform basic searches to find data within the cluster. However, it also offers an enhanced filtering capability called Dashboards Query Language (DQL). DQL is a user-friendly, text-based query language specifically designed for filtering and retrieving data within OpenSearch Dashboards. By utilising DQL, you can easily construct more advanced queries to precisely narrow down and filter your data, enabling you to retrieve the specific information you need. More information about DQL can be found in the official documentation linked below: https://opensearch.org/docs/latest/dashboards/discover/dql/
+
+***Dashboards and visualisations***
+With our data now organised into an index pattern, we can use the index pattern to create visually appealing dashboards and visualisations that effectively convey the information within it. To do so, we simply need to access the side panel and select the “Dashboards” option. From there, click on the button to create a new dashboard.
+http://localhost:5601/app/dashboards#/create?_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-15m,to:now))&_a=(description:'',filters:!(),fullScreenMode:!f,options:(hidePanelTitles:!f,useMargins:!t),panels:!(),query:(language:kuery,query:''),timeRestore:!f,title:'',viewMode:edit)
+![image](https://github.com/user-attachments/assets/2d02bffc-11b2-4f0d-a149-db89733a0305)
+The choice of visualisation here depends on the specific information you aim to communicate. For this demo, we will opt for simplicity and use a pie chart to display the distribution of different categories within our dataset. However, I highly recommend exploring other visualisations at your own pace to discover what works best for your data and your needs.
+![image](https://github.com/user-attachments/assets/d0f91591-7bba-4db5-b895-97200a837e37)
+
+By default, and without any configuration, the pie chart displays a count of all the data inside our index. At this stage, the visualisation is not very useful.
+
+To make the data more meaningful, we must tell OpenSearch what we want it to visualise. For example, to have the pie chart display a breakdown of the top 50 game producers from our dataset, we need to tell open search that this is what we want to see. We do this by adding a new bucket and selecting “Split slices”.
+
+![image-46-1536x526](https://github.com/user-attachments/assets/d2a52d35-ef2e-46ba-85d2-34299a282e1e)
+
+Next, under Aggregation, we select Terms. This instructs OpenSearch to craft our pie chart so that each distinct category (or ‘Term’) represents a segment within the pie chart. 
+
+Since our goal is to compile a list of producers, this will be our Term, so we must select that as the corresponding field from the available options in the field dropdown box. Additionally, to ensure that the pie chart displays only the top 50 producers, we must set the size to 50.
+
+![image](https://github.com/user-attachments/assets/483d7e0a-1337-4328-b93b-e68f56b14363)
+
+Clicking update will result in a pie chart like the one below. We can customise it further by clicking the options tab and selecting things such as labels and the type of pie chart to display.
+
+![image](https://github.com/user-attachments/assets/4b49a6e4-57ea-4a4e-9268-cd0b8d3add4d)
+
+Once saved, the visualisation object is now ready to be added to a dashboard. Do this by heading to the dashboard page and clicking the text that says “Add an existing object to this dashboard”.
+
+==============================================
