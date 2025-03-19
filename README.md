@@ -455,5 +455,65 @@ download first filebeat for windows:
 https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-installation-configuration.html
 ![image](https://github.com/user-attachments/assets/d5d9af81-4658-4434-8e43-c1236445f853)
 
+First of all we need to search for the compatible version of filebeat with opensearch:
+we need a oss version to be compatible so we need to follow this doc:
+https://opensearch.org/docs/latest/tools/#agents-and-ingestion-tools
+run this api:
+curl --location --request PUT 'https://localhost:9200/_cluster/settings' \
+--header 'Authorization: Basic YWRtaW46R0hBSUxFTkVtYXJrMTE5OTQqKg==' \
+--header 'Content-Type: application/json' \
+--data '{
+  "persistent": {
+    "compatibility": {
+      "override_main_response_version": true
+    }
+  }
+}'
+
+the version of opensearch here is :
+![image](https://github.com/user-attachments/assets/a80b408d-721b-4ce9-a863-7bce8dcf6fa5)
+
+download the version 7.12.1 of filebeat:
+from there : https://www.elastic.co/downloads/past-releases/filebeat-oss-7-12-1
+install the msi version ,
+go to the path:
+C:\Program Files\Elastic\Beats\7.12.1\filebeat>
+and run this command:
+filebeat.exe -e -c C:\Workspace\projects\opensearch\filebeat.yml
+
+this is the filebeat yml file conf: 
+
+  <sup> 
+      filebeat.inputs:
+  - type: log
+    enabled: true
+    paths:
+      - C:/Workspace/projects/opensearch/weblogic-logs.log
+
+output.elasticsearch:
+  hosts: ["https://localhost:9200"]
+  username: "admin"
+  password: "GHAILENEmark11994**" 
+  ssl.verification_mode: none
+  index: "weblogic-logs"
+
+setup.template.name: "weblogic-logs"
+setup.template.pattern: "weblogic-logs*"
+setup.ilm.enabled: false
+
+setup.kibana:
+  host: "https://localhost:5601"
+  
+logging.level: debug
+logging.to_files: true
+logging.files:
+  path: /var/log/filebeat
+  name: filebeat.log
+  keepfiles: 7
+  </sup>
+  
+![image](https://github.com/user-attachments/assets/68e18782-0c47-4547-9359-7e47e77a56cd)
+
+![image](https://github.com/user-attachments/assets/5dd09e19-09fe-447e-9502-10fe6f8076f8)
 
 
