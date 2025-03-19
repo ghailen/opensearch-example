@@ -448,4 +448,12 @@ Clicking update will result in a pie chart like the one below. We can customise 
 
 Once saved, the visualisation object is now ready to be added to a dashboard. Do this by heading to the dashboard page and clicking the text that says “Add an existing object to this dashboard”.
 
-==============================================
+====================================================================================================
+
+***EXAMPLE WITH WEBLOGIC LOG***
+download first filebeat for windows:
+https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-installation-configuration.html
+![image](https://github.com/user-attachments/assets/d5d9af81-4658-4434-8e43-c1236445f853)
+
+
+
