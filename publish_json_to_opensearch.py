@@ -5,7 +5,7 @@ import csv
 url = 'https://localhost:9200/games_index/_doc/'
 
 # Our OpenSearch credentials
-credentials = ('admin', 'GHAILENEmark11994**')
+credentials = ('admin', 'mypassword**')
 
 # Read CSV data into a Python data structure
 with open('computer_games.csv', 'r') as f:
