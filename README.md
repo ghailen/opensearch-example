@@ -622,3 +622,6 @@ NOTE : what is the dissect in the yaml file :
 ![image](https://github.com/user-attachments/assets/644da1e2-8838-4ccc-bb21-94122ebf69d5)
 
 ![image](https://github.com/user-attachments/assets/ce986e02-c135-4ecf-b2f0-e52bc30449a4)
+
+README REF :
+https://upcloud.com/resources/tutorials/getting-started-with-opensearch
