@@ -618,3 +618,7 @@ in the index pattern filter we can add as filter the logfile and message :
 ![image](https://github.com/user-attachments/assets/78d086e1-3708-43fd-8016-db1490005838)
 => we can see all the message of log of all files.
 
+NOTE : what is the dissect in the yaml file :
+![image](https://github.com/user-attachments/assets/644da1e2-8838-4ccc-bb21-94122ebf69d5)
+
+![image](https://github.com/user-attachments/assets/ce986e02-c135-4ecf-b2f0-e52bc30449a4)
