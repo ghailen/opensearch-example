@@ -548,5 +548,57 @@ let s check the log in the opensearch dabshboard index pattern:
 ![image](https://github.com/user-attachments/assets/dcbf36a5-c49c-4201-bf39-9cd4794db3d9)
 we can add filter message , to filter by messages:
 
+===========================
+let s suppose that we have multiple weblogic log files:
+![image](https://github.com/user-attachments/assets/1068356a-d5af-4d66-b408-bf6f48fc695c)
+with this format weblogic-logs-{yyyy.mm.dd}
+we want to create for each file an index, the new yaml file will be like that :
+
+```json
+filebeat.inputs:
+  - type: log
+    enabled: true
+    paths:
+      - C:\\Workspace\\projects\\opensearch\\weblogic-logs-*.log
+    fields_under_root: true
+
+processors:
+  - dissect:
+      field: "log.file.path"  # Use the correct field name for the file path
+      tokenizer: "C:\\Workspace\\projects\\opensearch\\weblogic-logs-%{log_date}.log"
+      target_prefix: "dissect"
+  - rename:
+      fields:
+        - from: "dissect.log_date"
+          to: "logfile"
+
+output.elasticsearch:
+  hosts: ["https://localhost:9200"]
+  username: "admin"
+  password: "mypassword"
+  ssl.verification_mode: none
+  index: "weblogic-logs-%{[logfile]}"  # Use the extracted `logfile` value
+
+setup.template.name: "weblogic-logs"
+setup.template.pattern: "weblogic-logs-*"
+setup.ilm.enabled: false
+
+setup.kibana:
+  host: "https://localhost:5601"
+
+logging.level: debug
+logging.to_files: true
+logging.files:
+  path: C:/Workspace/projects/opensearch/log/filebeat
+  name: filebeat.log
+  keepfiles: 7
+```
+
+![image](https://github.com/user-attachments/assets/b35b8437-a832-4fc7-86fc-5efba6debe3b)
+
+
+NOTE : IN CASE IF WE WANT TO CREATE AND INDEX WILL CURRENT DATE we can use something like index : weblogic-logs-%{+yyyy.MM,dd}  => this will create an index we today date with the format mentionned.
+
+
 
 
