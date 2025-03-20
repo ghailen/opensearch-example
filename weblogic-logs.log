@@ -1,0 +1,9 @@
+####<Mar 19, 2025 12:45:32 PM UTC> <Info> <Server> <BEA-002606> <AdminServer> <Thread-3> <[STANDBY] Server state changed to RUNNING>  
+####<Mar 19, 2025 12:45:45 PM UTC> <Info> <JDBC> <BEA-001112> <AdminServer> <Thread-5> <DataSource 'MyDataSource' bound to JNDI as jdbc/MyDB>  
+####<Mar 19, 2025 12:46:02 PM UTC> <Warning> <Security> <BEA-090072> <AdminServer> <Thread-7> <User 'weblogic' failed login attempt>  
+####<Mar 19, 2025 12:46:15 PM UTC> <Error> <JDBC> <BEA-001153> <AdminServer> <Thread-9> <Error while connecting to database: ORA-28001: the password has expired>  
+####<Mar 19, 2025 12:46:28 PM UTC> <Info> <Deployment> <BEA-149061> <AdminServer> <Thread-11> <Application 'MyApp' has started successfully>  
+####<Mar 19, 2025 12:47:10 PM UTC> <Warning> <JTA> <BEA-110486> <AdminServer> <Thread-14> <Transaction timeout exceeded for XA transaction>  
+####<Mar 19, 2025 12:48:23 PM UTC> <Error> <EJB> <BEA-010210> <AdminServer> <Thread-16> <EJB Exception: javax.ejb.EJBException: Unexpected error>  
+####<Mar 19, 2025 12:49:05 PM UTC> <Info> <HTTP> <BEA-101020> <AdminServer> <Thread-19> <Server received HTTP request from 192.168.1.10>  
+####<Mar 19, 2025 12:50:17 PM UTC> <Critical> <Server> <BEA-000337> <AdminServer> <Thread-22> <Server is out of memory, attempting to recover>  

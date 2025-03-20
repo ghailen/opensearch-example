@@ -1,0 +1,3 @@
+####<Mar 19, 2025 12:48:23 PM UTC> <Error> <EJB> <BEA-010210> <AdminServer> <Thread-16> <EJB Exception: javax.ejb.EJBException: Unexpected error>  
+####<Mar 19, 2025 12:49:05 PM UTC> <Info> <HTTP> <BEA-101020> <AdminServer> <Thread-19> <Server received HTTP request from 192.168.1.10>  
+####<Mar 19, 2025 12:50:17 PM UTC> <Critical> <Server> <BEA-000337> <AdminServer> <Thread-22> <Server is out of memory, attempting to recover>  
