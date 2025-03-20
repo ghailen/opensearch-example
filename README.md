@@ -599,6 +599,19 @@ logging.files:
 
 NOTE : IN CASE IF WE WANT TO CREATE AND INDEX WILL CURRENT DATE we can use something like index : weblogic-logs-%{+yyyy.MM,dd}  => this will create an index we today date with the format mentionned.
 
+the 3 index are added :
+![image](https://github.com/user-attachments/assets/24711f01-957b-4ab0-8900-c05c86d36392)
+
+let s create a new index pattern to use it in dashboard:
+![image](https://github.com/user-attachments/assets/1fd19be5-362a-41b5-b4b7-27f8db2de634)
+
+![image](https://github.com/user-attachments/assets/9b7cb76b-0fd1-40e7-aacd-dbe283f6f694)
+
+the new index pattern name  weblogic-logs-*
+![image](https://github.com/user-attachments/assets/e368ab6b-0f2f-439f-bc91-176a757b3aa9)
 
 
+in the index pattern filter we can add as filter the logfile and message :
+![image](https://github.com/user-attachments/assets/78d086e1-3708-43fd-8016-db1490005838)
+=> we can see all the message of log of all files.
 
