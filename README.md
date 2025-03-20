@@ -599,6 +599,9 @@ logging.files:
 
 NOTE : IN CASE IF WE WANT TO CREATE AND INDEX WILL CURRENT DATE we can use something like index : weblogic-logs-%{+yyyy.MM,dd}  => this will create an index we today date with the format mentionned.
 
+let s run the filebeat yaml:
+![image](https://github.com/user-attachments/assets/69bf796a-18c4-497d-8635-d7ed873d3075)
+
 the 3 index are added :
 ![image](https://github.com/user-attachments/assets/24711f01-957b-4ab0-8900-c05c86d36392)
 
