@@ -494,7 +494,7 @@ this is the filebeat yml file conf:
 output.elasticsearch:
   hosts: ["https://localhost:9200"]
   username: "admin"
-  password: "GHAILENEmark11994**" 
+  password: "mypassword" 
   ssl.verification_mode: none
   index: "weblogic-logs"
 
